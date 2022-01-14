@@ -1,0 +1,19 @@
+{
+  "name": "noframeworkapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "sequelize": "^6.13.0",
+    "sqlite3": "^5.0.2"
+  }
+}
