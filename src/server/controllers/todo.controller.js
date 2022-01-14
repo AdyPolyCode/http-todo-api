@@ -7,43 +7,43 @@ class TodoController {
         this.service = service;
     }
 
-    async findOne(payload) {
+    findOne = async (payload) => {
         const { id } = payload;
 
         const todo = await this.service.findOne(id);
 
-        return todo;
-    }
+        return { type: 'success', length: todo.length, data: todo };
+    };
 
-    async findMany(payload) {
-        const todo = await this.service.findMany();
+    findMany = async (payload) => {
+        const todos = await this.service.findMany();
 
-        return todo;
-    }
+        return { type: 'success', length: todos.length, data: todos };
+    };
 
-    async createOne(payload) {
+    createOne = async (payload) => {
         const { name, content } = payload;
 
         const todo = await this.service.createOne(name, content);
 
-        return todo;
-    }
+        return { type: 'success', length: todo.length, data: todo };
+    };
 
-    async updateOne(payload) {
+    updateOne = async (payload) => {
         const { id, name, content } = payload;
 
         const todo = await this.service.updateOne(id, name, content);
 
-        return todo;
-    }
+        return { type: 'success', length: todo.length, data: todo };
+    };
 
-    async deleteOne(payload) {
+    deleteOne = async (payload) => {
         const { id } = payload;
 
         const todo = await this.service.deleteOne(id);
 
-        return todo;
-    }
+        return { type: 'success', length: todo.length, data: todo };
+    };
 }
 
 module.exports = Controller.createController(TodoService, TodoController);
