@@ -22,19 +22,19 @@ module.exports = class TodoService {
             };
         }
 
-        return { error: null, data: todo };
+        return todo;
     }
 
     async findMany() {
-        const todos = await Todo.findAll();
+        const todos = await Todo.findAll({});
 
-        return { error: null, data: todos };
+        return todos;
     }
 
     async createOne(name, content) {
         const todo = await Todo.create(body);
 
-        return { error: null, data: todo };
+        return todo;
     }
 
     async updateOne(id, name, content) {
@@ -57,7 +57,7 @@ module.exports = class TodoService {
 
         todo = await todo.update(body);
 
-        return { error: null, data: todo };
+        return todo;
     }
 
     async deleteOne(id) {
@@ -80,6 +80,6 @@ module.exports = class TodoService {
 
         await todo.destroy();
 
-        return { error: null, data: todo };
+        return todo;
     }
 };
