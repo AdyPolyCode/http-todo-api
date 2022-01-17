@@ -1,17 +1,31 @@
-module.exports = (request) => {
-    return new Promise((resolve, reject) => {
-        request.setEncoding('utf8');
+const Parser = require('./parser')
 
-        let body = '';
+class BodyParser extends Parser {
+    static create(){
+        return new BodyParser()
+    }
 
-        request
-            .on('data', (chunk) => {
-                body += chunk;
-            })
-            .on('end', () => {
-                body = JSON.parse(body);
+    parse(request){
+        super.parse(request)
 
-                resolve(body);
-            });
-    });
-};
+        return new Promise((resolve, reject) => {
+            request.setEncoding('utf8');
+    
+            let body = '';
+    
+            request
+                .on('data', (chunk) => {
+                    body += chunk;
+                })
+                .on('end', () => {
+                    if(body){
+                        body = JSON.parse(body);
+                    }
+    
+                    resolve(body);
+                });
+        });
+    }
+}
+
+module.exports = BodyParser.create();
