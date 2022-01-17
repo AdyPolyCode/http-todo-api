@@ -10,13 +10,17 @@ class TodoController {
     findOne = async (payload) => {
         const { id } = payload;
 
-        const todo = await this.service.findOne(id);
+        let todo = await this.service.findOne(id);
+
+        todo = JSON.stringify(todos)
 
         return { type: 'success', length: todo.length, data: todo };
     };
 
     findMany = async (payload) => {
-        const todos = await this.service.findMany();
+        let todos = await this.service.findMany();
+
+        todos = JSON.stringify(todos)
 
         return { type: 'success', length: todos.length, data: todos };
     };
@@ -24,7 +28,9 @@ class TodoController {
     createOne = async (payload) => {
         const { name, content } = payload;
 
-        const todo = await this.service.createOne(name, content);
+        let todo = await this.service.createOne(name, content);
+
+        todo = JSON.stringify(todos)
 
         return { type: 'success', length: todo.length, data: todo };
     };
@@ -32,7 +38,9 @@ class TodoController {
     updateOne = async (payload) => {
         const { id, name, content } = payload;
 
-        const todo = await this.service.updateOne(id, name, content);
+        let todo = await this.service.updateOne(id, name, content);
+
+        todo = JSON.stringify(todos)
 
         return { type: 'success', length: todo.length, data: todo };
     };
@@ -40,7 +48,9 @@ class TodoController {
     deleteOne = async (payload) => {
         const { id } = payload;
 
-        const todo = await this.service.deleteOne(id);
+        let todo = await this.service.deleteOne(id);
+
+        todo = JSON.stringify(todos)
 
         return { type: 'success', length: todo.length, data: todo };
     };
