@@ -8,18 +8,10 @@ module.exports = class TodoService {
         const todo = await Todo.findByPk(id);
 
         if (!todo) {
-            const error = new NotFound(
+            throw new NotFound(
                 'Todo with id ' + id + ' was not found',
                 404
             );
-
-            return {
-                error: {
-                    message: error.message,
-                    statusCode: error.statusCode,
-                },
-                data: null,
-            };
         }
 
         return todo;
@@ -41,18 +33,10 @@ module.exports = class TodoService {
         let todo = await Todo.findByPk(id);
 
         if (!todo) {
-            const error = new NotFound(
+            throw new NotFound(
                 'Todo with id ' + id + ' was not found',
                 404
             );
-
-            return {
-                error: {
-                    message: error.message,
-                    statusCode: error.statusCode,
-                },
-                data: null,
-            };
         }
 
         todo = await todo.update(body);
@@ -64,18 +48,10 @@ module.exports = class TodoService {
         const todo = await Todo.findByPk(id);
 
         if (!todo) {
-            const error = new NotFound(
+            throw new NotFound(
                 'Todo with id ' + id + ' was not found',
                 404
             );
-
-            return {
-                error: {
-                    message: error.message,
-                    statusCode: error.statusCode,
-                },
-                data: null,
-            };
         }
 
         await todo.destroy();
