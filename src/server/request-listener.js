@@ -1,22 +1,21 @@
 const router = require('./routers/todo.router');
-const pathParser = require('./common/path-parser');
-const bodyParser = require('./common/body-parser');
+
+const UrlParser = require('./common/url-parser')
+const BodyParser = require('./common/body-parser');
 const headerAppender = require('./common/header-appender');
-const { CustomError } = require('./common/errors');
 
 module.exports = async (request, response) => {
     try {
         const { url, method } = request;
 
+        const parsedUrl = UrlParser.parse(url)
+
+        const body = await BodyParser.parse(request)
+
         const payload = {};
 
-        // TODO: fix url parsing
-        const { basePath, id } = pathParser(url);
-
-        const body = await bodyParser(request);
-
-        if (id) {
-            payload.id = id;
+        if (parsedUrl.path.id) {
+            payload.id = parsedUrl.path.id;
         }
 
         if (body) {
@@ -25,17 +24,18 @@ module.exports = async (request, response) => {
 
         const func = router.use(method, url);
 
-        const data = func(payload);
+        const { type, length, data } = await func(payload);
 
         headerAppender(response, {
-            type: 'success',
-            length: data.length,
+            type,
+            length,
         });
 
-        response.write('data');
+        response.write(data);
 
-        response.end();
+        return response.end();
     } catch (error) {
+        console.log(error)
         const { message, statusCode } = error;
 
         headerAppender(response, {
@@ -45,6 +45,6 @@ module.exports = async (request, response) => {
 
         response.write(message);
 
-        response.end();
+        return response.end();
     }
 };
