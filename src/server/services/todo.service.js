@@ -8,10 +8,7 @@ module.exports = class TodoService {
         const todo = await Todo.findByPk(id);
 
         if (!todo) {
-            throw new NotFound(
-                'Todo with id ' + id + ' was not found',
-                404
-            );
+            throw new NotFound('Todo with id ' + id + ' was not found', 404);
         }
 
         return todo;
@@ -24,7 +21,7 @@ module.exports = class TodoService {
     }
 
     async createOne(name, content) {
-        const todo = await Todo.create(body);
+        const todo = await Todo.create({ name, content });
 
         return todo;
     }
@@ -33,13 +30,10 @@ module.exports = class TodoService {
         let todo = await Todo.findByPk(id);
 
         if (!todo) {
-            throw new NotFound(
-                'Todo with id ' + id + ' was not found',
-                404
-            );
+            throw new NotFound('Todo with id ' + id + ' was not found', 404);
         }
 
-        todo = await todo.update(body);
+        await todo.update({ name, content });
 
         return todo;
     }
@@ -48,10 +42,7 @@ module.exports = class TodoService {
         const todo = await Todo.findByPk(id);
 
         if (!todo) {
-            throw new NotFound(
-                'Todo with id ' + id + ' was not found',
-                404
-            );
+            throw new NotFound('Todo with id ' + id + ' was not found', 404);
         }
 
         await todo.destroy();
