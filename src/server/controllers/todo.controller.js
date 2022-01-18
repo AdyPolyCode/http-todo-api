@@ -1,6 +1,5 @@
 const Controller = require('./controller');
 const TodoService = require('../services/todo.service');
-const forwarder = require('../common/helpers/param-forwarder');
 
 class TodoController {
     constructor(service) {
@@ -12,7 +11,7 @@ class TodoController {
 
         let todo = await this.service.findOne(id);
 
-        todo = JSON.stringify(todos)
+        todo = JSON.stringify(todo);
 
         return { type: 'success', length: todo.length, data: todo };
     };
@@ -20,27 +19,32 @@ class TodoController {
     findMany = async (payload) => {
         let todos = await this.service.findMany();
 
-        todos = JSON.stringify(todos)
+        todos = JSON.stringify(todos);
 
         return { type: 'success', length: todos.length, data: todos };
     };
 
     createOne = async (payload) => {
-        const { name, content } = payload;
+        const {
+            body: { name, content },
+        } = payload;
 
         let todo = await this.service.createOne(name, content);
 
-        todo = JSON.stringify(todos)
+        todo = JSON.stringify(todo);
 
         return { type: 'success', length: todo.length, data: todo };
     };
 
     updateOne = async (payload) => {
-        const { id, name, content } = payload;
+        const {
+            id,
+            body: { name, content },
+        } = payload;
 
         let todo = await this.service.updateOne(id, name, content);
 
-        todo = JSON.stringify(todos)
+        todo = JSON.stringify(todo);
 
         return { type: 'success', length: todo.length, data: todo };
     };
@@ -50,7 +54,7 @@ class TodoController {
 
         let todo = await this.service.deleteOne(id);
 
-        todo = JSON.stringify(todos)
+        todo = JSON.stringify(todo);
 
         return { type: 'success', length: todo.length, data: todo };
     };
