@@ -1,4 +1,4 @@
-const { CustomError } = require('../common/errors');
+const { BadRequest } = require('../common/errors');
 
 module.exports = class Router {
     static init() {
@@ -11,12 +11,20 @@ module.exports = class Router {
     }
 
     use(method, url) {
+        let { path, id } = url;
+
+        path = '/' + path;
+
+        if (id) {
+            path += '/:id';
+        }
+
         const func = this.path.filter((obj) =>
-            obj.path === url && obj.method === method ? obj : undefined
+            obj.path === path && obj.method === method ? obj : undefined
         );
 
-        if (!func) {
-            throw new CustomError('Wrong url or method', 400);
+        if (!func.length) {
+            throw new BadRequest('Wrong url or method', 400);
         }
 
         return func[0].controller;
