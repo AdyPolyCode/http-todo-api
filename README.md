@@ -12,6 +12,10 @@
 
 ### General-Information
 
+Http core package based api. As a db I used a simply sqlite with sequalize.
+Reason of implementation was just for learning purposes, though it works with the required
+input the api is not completely finished.
+
 ### Features
 
 -   REST API
